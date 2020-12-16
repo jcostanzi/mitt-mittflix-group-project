@@ -1,8 +1,11 @@
+
+
+
 function getImage(src){
   return new Promise((resolve,reject) => {
     const xhr = new XMLHttpRequest();
     xhr.addEventListener('readystatechange',() => {
-      console.log(xhr);
+//      console.log(xhr);
       if(xhr.readyState === 4 && xhr.status === 200){
         resolve(JSON.parse(xhr.responseText).Search);
       }else if (xhr.readystate === 4){
@@ -13,6 +16,12 @@ function getImage(src){
     xhr.send();
   })
 }
+
+
+const movies=document.querySelectorAll(".movie");
+
+
+
 
 // const myPromise = new Promise((resolve,reject) => {
 //   const xhr = new XMLHttpRequest();
@@ -33,14 +42,17 @@ getImage("http://www.omdbapi.com/?s=galaxy&apikey=e12d294b").then(result => cons
 getImage("http://www.omdbapi.com/?s=galaxy&apikey=e12d294b").then(result =>createImage(result), error => console.log(error));
 
 function createImage(arrayArg){
-  const ul = document.createElement("ul");
-  arrayArg.forEach(element => {
-    const li = document.createElement("li");
-    li.innerHTML = `<img class="fit-picture"
-    src="${element.Poster}"
-    alt="Grapefruit slice atop a pile of other slices">`;
-    ul.appendChild(li);
-  })
-  const body = document.querySelector("body");
-  body.prepend(ul);
+  for(let i=0;i<10;i++){
+    movies[i].firstElementChild.src = arrayArg[i].Poster;
+  }
+  // const ul = document.createElement("ul");
+  // arrayArg.forEach(element => {
+  //   const li = document.createElement("li");
+  //   li.innerHTML = `<img class="fit-picture"
+  //   src="${element.Poster}"
+  //   alt="Grapefruit slice atop a pile of other slices">`;
+  //   ul.appendChild(li);
+  // })
+  // const body = document.querySelector("body");
+  // body.prepend(ul);
 }
