@@ -1,48 +1,22 @@
-
-
-
-function getImage(src){
-  return new Promise((resolve,reject) => {
-    const xhr = new XMLHttpRequest();
-    xhr.addEventListener('readystatechange',() => {
-//      console.log(xhr);
-      if(xhr.readyState === 4 && xhr.status === 200){
-        resolve(JSON.parse(xhr.responseText).Search);
-      }else if (xhr.readystate === 4){
-        reject("the website is blank.");
-      }
-    })
-    xhr.open('GET',src);
-    xhr.send();
+fetch(`http://www.omdbapi.com/?s=galaxy&apikey=e12d294b`)
+  .then(response => {
+    if (response.status == 200) {
+      return response.json();
+    } else {
+      Promise.reject(response.statusText);
+    }
   })
-}
+  .then(data => {
+    createImage(data.Search);
+  })
+  .catch(error => {
+    alert(`Error: "${error}"`);
+  });
 
+const movies = document.querySelectorAll(".movie");
 
-const movies=document.querySelectorAll(".movie");
-
-
-
-
-// const myPromise = new Promise((resolve,reject) => {
-//   const xhr = new XMLHttpRequest();
-//   xhr.addEventListener('readystatechange',() => {
-//     console.log(xhr);
-//     if(xhr.readyState === 4 && xhr.status === 200){
-//       resolve(JSON.parse(xhr.responseText).Poster);
-//     }else if (xhr.readystate === 4){
-//       reject("the website is blank.");
-//     }
-//   })
-//   xhr.open('GET',"http://www.omdbapi.com/?i=tt3896198&apikey=e12d294b");
-//   xhr.send();
-// })
-
-getImage("http://www.omdbapi.com/?s=galaxy&apikey=e12d294b").then(result => console.log(result), error => console.log(error));
-//getImage("http://www.omdbapi.com/?i=tt3896198&apikey=e12d294b").then(result =>createImage(result), error => console.log(error));
-getImage("http://www.omdbapi.com/?s=galaxy&apikey=e12d294b").then(result =>createImage(result), error => console.log(error));
-
-function createImage(arrayArg){
-  for(let i=0;i<10;i++){
+function createImage(arrayArg) {
+  for (let i = 0; i < 10; i++) {
     movies[i].firstElementChild.src = arrayArg[i].Poster;
   }
   // const ul = document.createElement("ul");
@@ -56,7 +30,6 @@ function createImage(arrayArg){
   // const body = document.querySelector("body");
   // body.prepend(ul);
 }
-
 
 const search = document.querySelector('.search');
 const deleteBtn = document.querySelector('.delete');
