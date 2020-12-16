@@ -35,6 +35,8 @@ section {
 .search-bar input {
   background-color: black;
   border: 1px solid gray;
+  color: white;
+  font-size: 20px;
 }
 
 .search-bar input:focus {
