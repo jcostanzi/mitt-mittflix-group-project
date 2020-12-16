@@ -13,7 +13,10 @@ header, main, footer {
   margin: 0 auto;
   background-color: #1A1618;
   display: flex;
-  justify-content: center;
+}
+
+main {
+  justify-content: space-evenly;
 }
 
 footer {
@@ -22,11 +25,21 @@ footer {
 }
 
 header .title {
-  float: left;
+  width: 50%;
 }
 
 section {
   max-width: 1000px;
+}
+
+.search-bar input {
+  background-color: black;
+  border: 1px solid gray;
+}
+
+.search-bar input:focus {
+  outline: none !important;
+  border: 1px solid #c04335;
 }
 
 .movie img {
