@@ -54,10 +54,35 @@ section {
   width: 190px;
 }
 
+.movie img {
+  opacity: 1;
+  -webkit-transform: scale(1,1);
+  -webkit-transition-timing-function: ease-out;
+  -webkit-transition-duration: 250ms;
+  -moz-transform: scale(1,1);
+  -moz-transition-timing-function: ease-out;
+  -moz-transition-duration: 250ms;
+}
+
+.movie:hover img{
+  opacity: .2;
+  -webkit-transform: scale(1.05,1.07);
+  -webkit-transition-timing-function: ease-out;
+  -webkit-transition-duration: 250ms;
+  -moz-transform: scale(1.05,1.07);
+  -moz-transition-timing-function: ease-out;
+  -moz-transition-duration: 250ms;
+  overflow: hidden;
+}
+
 .movie .content {
-  /* display: none; */
+  display: none;
   position: absolute;
   width: 200px;
+}
+
+.movie:hover .content {
+  display: inline;
 }
 
 .movies-container {
