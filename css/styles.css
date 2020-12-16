@@ -44,16 +44,24 @@ section {
   border: 1px solid #c04335;
 }
 
-.movie img {
+.movie {
   width: 190px;
+  height: 320px;
+}
+
+.movie img {
+  position: absolute;
+  width: 190px;
+}
+
+.movie .content {
+  /* display: none; */
+  position: absolute;
+  width: 200px;
 }
 
 .movies-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-}
-
-.movie .description {
-  display: none;
 }
