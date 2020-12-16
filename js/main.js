@@ -56,3 +56,22 @@ function createImage(arrayArg){
   // const body = document.querySelector("body");
   // body.prepend(ul);
 }
+
+
+const search = document.querySelector('.search');
+const deleteBtn = document.querySelector('.delete');
+
+deleteBtn.addEventListener('click', function(event) {
+  console.log("deletebtn");
+  search.value = '';
+})
+
+search.addEventListener('keypress', function (e) {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    if (search.value !== '') {
+      search.innerHTML = search.value;
+      search.value = '';
+    }
+  }
+});
