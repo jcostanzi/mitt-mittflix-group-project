@@ -1,0 +1,44 @@
+@font-face {
+  font-family: Bebas-Neue;
+  src: url(../fonts/bebas-neue.ttf);
+}
+
+body {
+  background-color: black;
+  color: white;
+}
+
+header, main, footer {
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: #1A1618;
+  display: flex;
+  justify-content: center;
+}
+
+footer {
+  padding: 50px 0px;
+  color: gray;
+}
+
+header .title {
+  float: left;
+}
+
+section {
+  max-width: 1000px;
+}
+
+.movie img {
+  width: 190px;
+}
+
+.movies-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.movie .description {
+  display: none;
+}
