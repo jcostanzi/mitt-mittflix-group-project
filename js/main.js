@@ -1,13 +1,64 @@
 const searchElem = document.querySelector('.search');
 const deleteBtn = document.querySelector('.delete');
-const container = document.querySelector(".movies-container");
+const container = document.querySelector('.movies-container');
+const paginationElem = document.querySelector('.pagination');
+const pageNumbersElem = document.querySelector('#page-numbers');
+const prevPageBtn = document.querySelector('#prev-page');
+const nextPageBtn = document.querySelector('#next-page');
 
 let movies = [];
+const resultsPerPage = 10;
 
-function search(keyword) {
+function generatePageNumbers(keyword, currentPage, totalResults) {
+
+  pageNumbersElem.innerHTML = '';
+  let totalPages = Math.ceil(totalResults / resultsPerPage);
+
+  for (let i = 1; i <= totalPages; i++) {
+    const pageNumber = document.createElement("a");
+
+    if (i != currentPage) {
+      pageNumber.setAttribute('href', '#');
+      pageNumber.addEventListener('click', function (e) {
+          search(keyword, i);
+          e.preventDefault();
+      });
+      pageNumber.textContent = `(${i})`;
+    } else {
+      pageNumber.textContent = `${i}`;
+    }
+
+    pageNumbersElem.appendChild(pageNumber);
+  }
+
+  if (currentPage == 1) {
+    prevPageBtn.setAttribute('disabled', 'disabled');
+  } else {
+    prevPageBtn.removeAttribute('disabled');
+  }
+
+  if (currentPage == totalPages) {
+    nextPageBtn.setAttribute('disabled', 'disabled');
+  } else {
+    nextPageBtn.removeAttribute('disabled');
+  }
+
+  prevPageBtn.onclick = function (e) {
+    search(keyword, currentPage - 1);
+    e.preventDefault();
+  };
+
+  nextPageBtn.onclick = function (e) {
+    search(keyword, currentPage + 1);
+    e.preventDefault();
+  };
+}
+
+function search(keyword, page = 1) {
   container.innerHTML = '';
+  paginationElem.style.display = 'none';
   movies = [];
-  fetch(`http://www.omdbapi.com/?s=${keyword}&apikey=e12d294b`)
+  fetch(`http://www.omdbapi.com/?s=${keyword}&apikey=e12d294b&page=${page}`)
     .then(response => {
       if (response.status == 200) {
         return response.json();
@@ -23,6 +74,8 @@ function search(keyword) {
       return data;
     })
     .then(data => {
+      paginationElem.style.display = 'flex';
+      generatePageNumbers(keyword, page, data.totalResults);
       data.Search.forEach(e => {
         const movie = {
           imdbID: e.imdbID,
@@ -39,7 +92,7 @@ function search(keyword) {
       });
     })
     .catch(error => {
-      alert(`Error: "${error}"`);
+      console.log(`Error: "${error}"`);
     });
 }
 
@@ -54,13 +107,13 @@ function findContent(movie) {
     })
     .then(data => {
       movie.Title = data.Title;
-      movie.Rating = data.Ratings[0].Value;
+      movie.Rating = data.Ratings.length > 0 ? data.Ratings[0].Value : '0';
       movie.Plot = data.Plot;
 
       createImage(movie);
     })
     .catch(error => {
-      alert(`Error: "${error}"`);
+      console.log(`Error: "${error}"`);
     });
 }
 
@@ -91,4 +144,4 @@ searchElem.addEventListener('keypress', function (e) {
   }
 });
 
-search('galaxy');
+// search('galaxy');
